@@ -59,6 +59,16 @@ const MENU = Object.freeze({
   [MENU_KIND.DRINK]: [MENU_ITEMS.COKE, MENU_ITEMS.WINE, MENU_ITEMS.CHAMPAGNE],
 });
 
-const ERROR_MESSAGE = Object.freeze({});
+const ERROR_MESSAGE = Object.freeze({
+  INVALID_DATE: '[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.',
+  INVALID_UNKNOWN_MENU:
+    '[ERROR] 유효하지 않은 주문입니다. (없는 메뉴) 다시 입력해 주세요.',
+  INVALID_INPUT:
+    '[ERROR] 유효하지 않은 주문입니다. (잘못된 입력) 다시 입력해 주세요.',
+  INVALID_FORMAT:
+    '[ERROR] 유효하지 않은 주문입니다. (잘못된 형식) 다시 입력해 주세요.',
+  DUPLICATE_MENU:
+    '[ERROR] 유효하지 않은 주문입니다. (중복된 메뉴) 다시 입력해 주세요.',
+});
 
 export { INPUT_MESSAGE, OUTPUT_MESSAGE, WORD, ERROR_MESSAGE, MENU };
