@@ -17,16 +17,12 @@ const inputHandler = {
     try {
       const input = await Console.readLineAsync(userInput);
       const menu = parseInput(input);
-      this.validateOrder(menu, validate);
+      validate(menu);
       return Object.fromEntries(menu);
     } catch (e) {
       Console.print(e.message);
       return this.orderHandler(userInput, validate);
     }
-  },
-
-  validateOrder(menu, validate) {
-    validate(menu);
   },
 };
 
