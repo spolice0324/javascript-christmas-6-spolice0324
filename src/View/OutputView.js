@@ -23,8 +23,7 @@ const OutputView = {
   },
 
   printGift(client) {
-    const output = `${OUTPUT_MESSAGE.TITLE.GIFT}\n${client.getGift()}\n`;
-    Console.print(output);
+    Console.print(`${OUTPUT_MESSAGE.TITLE.GIFT}\n${client.getGift()}\n`);
   },
 
   printBenefit(client) {
@@ -49,8 +48,7 @@ const OutputView = {
   },
 
   printEventBadge(client) {
-    const output = `${OUTPUT_MESSAGE.TITLE.BADGE}\n${client.getEventBadge()}\n`;
-    Console.print(output);
+    Console.print(`${OUTPUT_MESSAGE.TITLE.BADGE}\n${client.getEventBadge()}\n`);
   },
 };
 
