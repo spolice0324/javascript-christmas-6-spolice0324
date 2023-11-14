@@ -1,12 +1,5 @@
 import { INPUT_MESSAGE } from '../Util/constants';
-import {
-  validateName,
-  validateDuplicate,
-  validateCount,
-  validateTotalCount,
-  validateDate,
-  validateDrink,
-} from '../Util/validate';
+import { validateDate, validateOrder } from '../Util/validateInput';
 import InputHandler from '../Util/inputHandler';
 
 const InputView = {
@@ -15,17 +8,7 @@ const InputView = {
   },
 
   async readOrder() {
-    return InputHandler.orderHandler(INPUT_MESSAGE.ORDER, this.validateOrder);
-  },
-
-  validateOrder(order) {
-    InputHandler.validateOrder(order, menu => {
-      validateName(menu);
-      validateDuplicate(menu);
-      validateDrink(menu);
-      validateCount(menu);
-      validateTotalCount(menu);
-    });
+    return InputHandler.orderHandler(INPUT_MESSAGE.ORDER, validateOrder);
   },
 };
 
