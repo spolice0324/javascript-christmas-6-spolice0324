@@ -1,12 +1,15 @@
 import { ERROR_MESSAGE, MENU, MENU_KIND } from './constants';
 
-const validateDate = (date) => {
+const validateDate = date => {
   if (!(date >= 1 && date <= 31)) {
+    throw new Error(ERROR_MESSAGE.INVALID_DATE);
+  }
+  if (typeof date !== 'number' || !Number.isInteger(date)) {
     throw new Error(ERROR_MESSAGE.INVALID_DATE);
   }
 };
 
-const validateName = (menu) => {
+const validateName = menu => {
   const checkedName = new Set();
   menu.forEach(([name]) => {
     if (!Object.keys(MENU).includes(name)) {
@@ -16,7 +19,7 @@ const validateName = (menu) => {
   });
 };
 
-const validateDuplicate = (menu) => {
+const validateDuplicate = menu => {
   const checkedName = new Set();
   menu.forEach(([name]) => {
     if (checkedName.has(name)) {
@@ -26,30 +29,30 @@ const validateDuplicate = (menu) => {
   });
 };
 
-const validateDrink = (menu) => {
-  const type = new Set(menu.map(([name]) => MENU[name].type));
-  if (type.has(MENU_KIND.DRINK) && type.size === 1) {
+const validateOnlyDrink = menu => {
+  const types = new Set(menu.map(([name]) => MENU[name].type));
+  if (types.size === 1 && types.has(MENU_KIND.DRINK)) {
     throw new Error(ERROR_MESSAGE.INVALID_ORDER);
   }
 };
 
-const validateCount = (menu) => {
+const validateCount = menu => {
   if (!menu.every(([, count]) => count >= 1)) {
     throw new Error(ERROR_MESSAGE.INVALID_ORDER);
   }
 };
 
-const validateTotalCount = (menu) => {
+const validateTotalCount = menu => {
   const total = menu.reduce((acc, [, count]) => acc + count, 0);
   if (total > 20) {
     throw new Error(ERROR_MESSAGE.INVALID_ORDER);
   }
 };
 
-const validateOrder = (order) => {
+const validateOrder = order => {
   validateName(order);
   validateDuplicate(order);
-  validateDrink(order);
+  validateOnlyDrink(order);
   validateCount(order);
   validateTotalCount(order);
 };
