@@ -1,4 +1,4 @@
-const MENU_TYPE = Object.freeze({
+const MENU_KIND = Object.freeze({
   APPETIZER: '애피타이저',
   MAIN: '메인',
   DESSERT: '디저트',
@@ -6,31 +6,32 @@ const MENU_TYPE = Object.freeze({
 });
 
 const MENU = Object.freeze({
-  양송이수프: { price: 6000, type: MENU_TYPE.APPETIZER },
-  타파스: { price: 5500, type: MENU_TYPE.APPETIZER },
-  시저샐러드: { price: 8000, type: MENU_TYPE.APPETIZER },
-  티본스테이크: { price: 55000, type: MENU_TYPE.MAIN },
-  바비큐립: { price: 54000, type: MENU_TYPE.MAIN },
-  해산물파스타: { price: 35000, type: MENU_TYPE.MAIN },
-  크리스마스파스타: { price: 25000, type: MENU_TYPE.MAIN },
-  초코케이크: { price: 15000, type: MENU_TYPE.DESSERT },
-  아이스크림: { price: 5000, type: MENU_TYPE.DESSERT },
-  제로콜라: { price: 3000, type: MENU_TYPE.DRINK },
-  레드와인: { price: 60000, type: MENU_TYPE.DRINK },
-  샴페인: { price: 25000, type: MENU_TYPE.DRINK },
+  양송이수프: { price: 6000, kind: MENU_KIND.APPETIZER },
+  타파스: { price: 5500, kind: MENU_KIND.APPETIZER },
+  시저샐러드: { price: 8000, kind: MENU_KIND.APPETIZER },
+  티본스테이크: { price: 55000, kind: MENU_KIND.MAIN },
+  바비큐립: { price: 54000, kind: MENU_KIND.MAIN },
+  해산물파스타: { price: 35000, kind: MENU_KIND.MAIN },
+  크리스마스파스타: { price: 25000, kind: MENU_KIND.MAIN },
+  초코케이크: { price: 15000, kind: MENU_KIND.DESSERT },
+  아이스크림: { price: 5000, kind: MENU_KIND.DESSERT },
+  제로콜라: { price: 3000, kind: MENU_KIND.DRINK },
+  레드와인: { price: 60000, kind: MENU_KIND.DRINK },
+  샴페인: { price: 25000, kind: MENU_KIND.DRINK },
 });
 
 const DATE = Object.freeze({
-  EVNET_START: 1,
+  EVENT_START: 1,
   EVENT_END: 25,
   PERIOD_DISCOUNT: 1000,
+  SPECIAL_DISCOUNT: 1000,
+  SPECIAL_DATE: [3, 10, 17, 24, 25, 31],
   PER_DAY_DISCOUNT: 100,
 });
 
 const INFO = Object.freeze({
   UNIT: '원',
   WEEK_DISCOUNT: 2023,
-  SPECIAL_DISCOUNT: [3, 10, 17, 24, 25, 31],
   ORDER_MINIMUM: 10000,
   GIFT_CONDITION: 120000,
   GIFT: '샴페인 1개',
@@ -76,7 +77,7 @@ const ERROR_MESSAGE = Object.freeze({
 });
 
 export {
-  MENU_TYPE,
+  MENU_KIND,
   MENU,
   DATE,
   INFO,
