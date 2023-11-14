@@ -1,4 +1,6 @@
-import { ERROR_MESSAGE, MENU } from '../src/Util/constants';
+import { Console } from '@woowacourse/mission-utils';
+import { ERROR_MESSAGE, INPUT_MESSAGE, MENU } from '../src/Util/constants';
+import inputHandler from '../src/Util/inputHandler';
 import { validateDate, validateOrder } from '../src/Util/validateInput';
 
 describe('Util 테스트', () => {
@@ -73,6 +75,42 @@ describe('Util 테스트', () => {
       expect(() => validateOrder(totalCountExceedOrder)).toThrow(
         ERROR_MESSAGE.INVALID_ORDER,
       );
+    });
+  });
+
+  describe('입력 핸들러 함수 테스트', () => {
+    test('날짜 입력에 대한 핸들러 함수 테스트', async () => {
+      const mockReadLineAsync = jest
+        .spyOn(Console, 'readLineAsync')
+        .mockResolvedValueOnce('1');
+      const mockValidateDate = jest.fn();
+      const date = await inputHandler.dateHandler(
+        INPUT_MESSAGE.DATE,
+        mockValidateDate,
+      );
+      expect(mockReadLineAsync).toBeCalledWith(INPUT_MESSAGE.DATE);
+      expect(mockValidateDate).toBeCalledWith(1);
+      expect(date).toBe(1);
+    });
+
+    test('주문 입력에 대한 핸들러 함수 테스트', async () => {
+      const mockReadLineAsync = jest
+        .spyOn(Console, 'readLineAsync')
+        .mockResolvedValueOnce('아이스크림-2, 제로콜라-1');
+      const mockValidateOrder = jest.fn();
+      const order = await inputHandler.orderHandler(
+        INPUT_MESSAGE.ORDER,
+        mockValidateOrder,
+      );
+      expect(mockReadLineAsync).toBeCalledWith(INPUT_MESSAGE.ORDER);
+      expect(mockValidateOrder).toBeCalledWith([
+        ['아이스크림', 2],
+        ['제로콜라', 1],
+      ]);
+      expect(order).toEqual({
+        아이스크림: 2,
+        제로콜라: 1,
+      });
     });
   });
 });
