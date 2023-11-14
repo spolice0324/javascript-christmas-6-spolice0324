@@ -1,5 +1,5 @@
 import Discount from '../src/Domain/Discount';
-import { DATE, INFO } from '../src/Util/constants';
+import { DATE, DISCOUNT, INFO } from '../src/Util/constants';
 
 describe('Discount 클래스 로직 테스트', () => {
   let discount;
@@ -11,8 +11,8 @@ describe('Discount 클래스 로직 테스트', () => {
     test('크리스마스 이벤트 기간 내에 있는 경우 할인이 올바르게 계산되어야 한다.', () => {
       const date = DATE.EVENT_START + 2;
       const result = discount.isPeriod(date);
-      const expectedDiscount
-        = -DATE.PERIOD_DISCOUNT + (date - 1) * -DATE.PER_DAY_DISCOUNT;
+      const expectedDiscount =
+        -DATE.PERIOD_DISCOUNT + (date - 1) * -DATE.PER_DAY_DISCOUNT;
       expect(result).toBe(expectedDiscount);
     });
 
@@ -86,5 +86,46 @@ describe('Discount 클래스 로직 테스트', () => {
     });
   });
 
-  
+  describe('할인 금액 계산 메소드 테스트', () => {
+    test('크리스마스 이벤트 기간 할인이 올바르게 계산되어야 합니다.', () => {
+      const date = DATE.EVENT_START;
+      const menu = {};
+      const result = discount.calculateDiscount(date, menu);
+      expect(result[DISCOUNT.CHRISTMAS]).toBe(-DATE.PERIOD_DISCOUNT);
+    });
+
+    test('평일 할인이 올바르게 계산되어야 합니다.', () => {
+      const date = DATE.EVENT_START + 3;
+      const menu = { 초코케이크: 4, 레드와인: 1, 해산물파스타: 1 };
+      const result = discount.calculateDiscount(date, menu);
+      expect(result[DISCOUNT.WEEK]).toBe(-INFO.WEEK_DISCOUNT * 4);
+    });
+
+    test('주말 할인이 올바르게 계산되어야 합니다.', () => {
+      const date = DATE.EVENT_START + 1;
+      const menu = { 초코케이크: 4, 레드와인: 1, 해산물파스타: 1 };
+      const result = discount.calculateDiscount(date, menu);
+      expect(result[DISCOUNT.WEEKEND]).toBe(-INFO.WEEK_DISCOUNT * 1);
+    });
+
+    test('특별 할인이 올바르게 계산되어야 합니다.', () => {
+      const date = DATE.SPECIAL_DATE[0];
+      const menu = {};
+      const result = discount.calculateDiscount(date, menu);
+      expect(result[DISCOUNT.SPECIAL]).toBe(-DATE.SPECIAL_DISCOUNT);
+    });
+
+    test('할인 금액이 올바르게 계산되어야 한다.', () => {
+      const date = DATE.EVENT_START + 2;
+      const menu = { 초코케이크: 4, 레드와인: 1, 해산물파스타: 1 };
+      const result = discount.calculateDiscount(date, menu);
+      const expectedDiscount = {
+        '크리스마스 디데이 할인':
+          -DATE.PERIOD_DISCOUNT + (date - 1) * -DATE.PER_DAY_DISCOUNT,
+        '평일 할인': -INFO.WEEK_DISCOUNT * 4,
+        '특별 할인': -1000,
+      };
+      expect(result).toEqual(expectedDiscount);
+    });
+  });
 });
