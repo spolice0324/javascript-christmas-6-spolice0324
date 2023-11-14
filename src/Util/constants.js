@@ -31,6 +31,7 @@ const DATE = Object.freeze({
 
 const INFO = Object.freeze({
   UNIT: '원',
+  COUNT: '개',
   WEEK_DISCOUNT: 2023,
   ORDER_MINIMUM: 10000,
   GIFT_CONDITION: 120000,
@@ -48,6 +49,7 @@ const DISCOUNT = Object.freeze({
   WEEK: '평일 할인',
   WEEKEND: '주말 할인',
   SPECIAL: '특별 할인',
+  GIFTS: '증정 이벤트',
 });
 
 const INPUT_MESSAGE = Object.freeze({
