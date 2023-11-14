@@ -34,6 +34,12 @@ class Discount {
     return weekendDisCount;
   }
 
+  checkSpecialDay(date) {
+    let specialDayDiscount = 0;
+    if (DATE.SPECIAL_DATE.includes(date))
+      specialDayDiscount += -DATE.SPECIAL_DISCOUNT;
+    return specialDayDiscount;
+  }
 }
 
 export default Discount;
