@@ -1,5 +1,5 @@
-import { DISCOUNT, INFO, MENU } from '../Util/constants';
-import Discount from './Discount';
+import { INFO, MENU, DISCOUNT } from '../constants.js';
+import Discount from './Discount.js';
 
 class Client {
   #date;
@@ -58,11 +58,24 @@ class Client {
 
   getDiscountAmount() {
     const benefit = this.calculateBenefits();
-    if (this.isEmpty(benefit)) return 0;
+    if (!benefit || Object.keys(benefit).length === 0) return 0;
 
     let totalAmount = Object.values(benefit).reduce((acc, cur) => acc + cur);
     if (this.getGift() !== INFO.NONE) totalAmount += -MENU.샴페인.price;
     return totalAmount;
+  }
+
+  getAfterDiscount() {
+    const beforeDiscount = this.getBeforeDiscount();
+    const discountAmount = this.getDiscountAmount();
+    let gift = 0;
+
+    if (this.getGift() !== INFO.NONE) {
+      gift = MENU.샴페인.price;
+    }
+
+    const total = beforeDiscount + discountAmount + gift;
+    return total;
   }
 }
 
