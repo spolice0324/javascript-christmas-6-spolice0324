@@ -3,14 +3,14 @@ import { DATE, DISCOUNT, INFO, MENU, MENU_KIND } from '../Util/constants';
 class Discount {
   calculateDiscount(date, menu) {
     const discount = {};
-    const checkDisCount = (key, value) => {
+    const addDisCount = (key, value) => {
       if (value !== 0) discount[key] = value;
     };
 
-    checkDisCount(DISCOUNT.CHRISTMAS, this.checkPeriod(date));
-    checkDisCount(DISCOUNT.WEEK, this.checkWeek(date, menu));
-    checkDisCount(DISCOUNT.WEEKEND, this.checkWeekend(date, menu));
-    checkDisCount(DISCOUNT.SPECIAL, this.checkSpecialDay(date));
+    addDisCount(DISCOUNT.CHRISTMAS, this.checkPeriod(date));
+    addDisCount(DISCOUNT.WEEK, this.checkWeek(date, menu));
+    addDisCount(DISCOUNT.WEEKEND, this.checkWeekend(date, menu));
+    addDisCount(DISCOUNT.SPECIAL, this.checkSpecialDay(date));
     return discount;
   }
 
