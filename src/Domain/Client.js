@@ -18,12 +18,20 @@ class Client {
     return discount.calculateDiscount(this.#date, this.#order);
   }
 
-  getMenuList() {
+  getOrderList() {
     let output = '';
     Object.entries(this.#order).forEach(([name, count]) => {
       output += `${name} ${count}${INFO.COUNT}\n`;
     });
     return output;
+  }
+
+  getBeforeDiscount() {
+    let cost = 0;
+    Object.entries(this.#order).forEach(([name, count]) => {
+      cost += MENU[name].price * count;
+    });
+    return cost;
   }
 }
 
