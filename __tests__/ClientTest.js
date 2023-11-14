@@ -55,5 +55,76 @@ describe('Client 클래스 로직 테스트', () => {
       const result = client.getGift();
       expect(result).toEqual(INFO.GIFT);
     });
+
+    test('증정 메뉴가 없는 경우, 올바르게 반환되어야 한다.', () => {
+      client = new Client(25, { 해산물파스타: 1, 초코케이크: 1 });
+      const result = client.getGift();
+      expect(result).toEqual(INFO.NONE);
+    });
+  });
+
+  describe('혜택 목록 반환 메소드 테스트', () => {
+    test('혜택 목록이 올바르게 반환되어야 한다.', () => {
+      const result = client.getBenefitList();
+      expect(result).toEqual(
+        `크리스마스 디데이 할인: -${(
+          DATE.PERIOD_DISCOUNT
+          + DATE.PER_DAY_DISCOUNT * 24
+        ).toLocaleString()}원\n평일 할인: -${(
+          INFO.WEEK_DISCOUNT * 2
+        ).toLocaleString()}원\n특별 할인: -${DATE.SPECIAL_DISCOUNT.toLocaleString()}원\n증정 이벤트: -${INFO.GIFT_PRICE.toLocaleString()}원\n`,
+      );
+    });
+
+    test('혜택 목록이 없는 경우, 올바르게 반환되어야 한다.', () => {
+      client = new Client(30, { 제로콜라: 1, 초코케이크: 1 });
+      const result = client.getBenefitList();
+      expect(result).toEqual(INFO.NONE);
+    });
+  });
+
+  describe('할인 금액 반환 메소드 테스트', () => {
+    test('할인 금액이 올바르게 반환되어야 한다.', () => {
+      const result = client.getDiscountAmount();
+      const expectedResult = -(
+        DATE.PERIOD_DISCOUNT
+        + DATE.PER_DAY_DISCOUNT * 24
+        + INFO.WEEK_DISCOUNT * 2
+        + DATE.SPECIAL_DISCOUNT
+        + INFO.GIFT_PRICE
+      );
+      expect(result).toEqual(expectedResult);
+    });
+  });
+
+  describe('할인 후 금액 반환 메소드 테스트', () => {
+    test('할인 후 금액이 올바르게 반환되어야 한다.', () => {
+      const result = client.getAfterDiscount();
+      let expectedResult
+        = client.getBeforeDiscount() + client.getDiscountAmount();
+      if (client.getGift() !== INFO.NONE) {
+        expectedResult += INFO.GIFT_PRICE;
+      }
+      expect(result).toEqual(expectedResult);
+    });
+  });
+
+  describe('이벤트 배지 반환 메소드 테스트', () => {
+    test('총 혜택금액 2만원 이상인 경우 산타 배지가 반환되어야 한다.', () => {
+      const result = client.getEventBadge();
+      expect(result).toEqual(INFO.BADGE.SANTA.NAME);
+    });
+
+    test('총 혜택금액 1만원 이상인 경우 트리 배지가 반환되어야 한다.', () => {
+      client = new Client(15, { 크리스마스파스타: 4 });
+      const result = client.getEventBadge();
+      expect(result).toEqual(INFO.BADGE.TREE.NAME);
+    });
+
+    test('총 혜택금액 5천원 이상인 경우 별 배지가 반환되어야 한다.', () => {
+      client = new Client(8, { 해산물파스타: 2, 초코케이크: 3 });
+      const result = client.getEventBadge();
+      expect(result).toEqual(INFO.BADGE.STAR.NAME);
+    });
   });
 });
