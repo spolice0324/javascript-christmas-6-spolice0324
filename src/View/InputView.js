@@ -1,27 +1,46 @@
 import { Console } from '@woowacourse/mission-utils';
 import { INPUT_MESSAGE } from '../Util/constants';
+import {
+  validateName,
+  validateDuplicate,
+  validateDrink,
+  validateCount,
+  validateTotalCount,
+  validateDate,
+} from '../Util/validate';
 
-const getInputWithValidate = async (userInput, validate) => {
-  const input = await userInput();
-  validate(input);
-  return input;
-};
+import parseInput from '../Util/parseInput';
 
 const InputView = {
   async readDate() {
-    const date = await getInputWithValidate(
-      async () => Console.readLineAsync(INPUT_MESSAGE.DATE),
-      // validateDate,
-    );
-    return Number(date);
+    try {
+      const input = await Console.readLineAsync(INPUT_MESSAGE.DATE);
+      validateDate(Number(input));
+      return Number(input);
+    } catch (e) {
+      Console.print(e.message);
+      return this.readDate();
+    }
   },
 
   async readOrder() {
-    const order = await getInputWithValidate(
-      async () => Console.readLineAsync(INPUT_MESSAGE.ORDER),
-      // validateOrder,
-    );
-    return order;
+    try {
+      const input = await Console.readLineAsync(INPUT_MESSAGE.ORDER);
+      const menu = parseInput(input);
+      this.validateOrder(menu);
+      return Object.fromEntries(menu);
+    } catch (e) {
+      Console.print(e.message);
+      return this.readOrder();
+    }
+  },
+
+  validateOrder(menu) {
+    validateName(menu);
+    validateDuplicate(menu);
+    validateDrink(menu);
+    validateCount(menu);
+    validateTotalCount(menu);
   },
 };
 
