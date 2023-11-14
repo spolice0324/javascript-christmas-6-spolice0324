@@ -1,5 +1,5 @@
-import { INFO, MENU, DISCOUNT } from '../constants.js';
-import Discount from './Discount.js';
+import { DISCOUNT, INFO, MENU } from '../Util/constants';
+import Discount from './Discount';
 
 class Client {
   #date;
@@ -36,8 +36,8 @@ class Client {
   }
 
   getGift() {
-    if (this.getBeforeDiscount() >= INFO.GIFT_CONDITION) return INFO.GIFT;
-    else return INFO.NONE;
+    const isGift = this.getBeforeDiscount() >= INFO.GIFT_CONDITION;
+    return (isGift && INFO.GIFT) || INFO.NONE;
   }
 
   getBenefitList() {
