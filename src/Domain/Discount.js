@@ -21,6 +21,19 @@ class Discount {
     }
     return weekDisCount;
   }
+
+  checkWeekend(date, menu) {
+    let weekendDisCount = 0;
+    if (date % 7 === 1 || date % 7 === 2) {
+      let count = 0;
+      Object.keys(menu).forEach(name => {
+        if (MENU[name].kind === MENU_KIND.MAIN) count += menu[name];
+      });
+      weekendDisCount += -INFO.WEEK_DISCOUNT * count;
+    }
+    return weekendDisCount;
+  }
+
 }
 
 export default Discount;
