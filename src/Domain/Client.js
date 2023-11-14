@@ -77,6 +77,14 @@ class Client {
     const total = beforeDiscount + discountAmount + gift;
     return total;
   }
+
+  getEventBadge() {
+    const benefit = this.getDiscountAmount();
+    if (benefit <= -INFO.BADGE.SANTA.PRICE) return INFO.BADGE.SANTA.NAME;
+    else if (benefit <= -INFO.BADGE.TREE.PRICE) return INFO.BADGE.TREE.NAME;
+    else if (benefit <= -INFO.BADGE.STAR.PRICE) return INFO.BADGE.STAR.NAME;
+    else return INFO.NONE;
+  }
 }
 
 export default Client;
