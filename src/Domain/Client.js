@@ -1,4 +1,4 @@
-import { INFO, MENU } from '../Util/constants';
+import { DISCOUNT, INFO, MENU } from '../Util/constants';
 import Discount from './Discount';
 
 class Client {
@@ -40,6 +40,21 @@ class Client {
     else return INFO.NONE;
   }
 
+  getBenefitList() {
+    const benefit = this.calculateBenefits();
+    if (!benefit || Object.keys(benefit).length === 0) {
+      return INFO.NONE;
+    }
+    let output = '';
+    Object.entries(benefit).forEach(([discount, cost]) => {
+      output += `${discount}: ${cost.toLocaleString()}${INFO.UNIT}\n`;
+    });
+    if (this.getGift() !== INFO.NONE)
+      output += `${DISCOUNT.GIFTS}: -${MENU.샴페인.price.toLocaleString()}${
+        INFO.UNIT
+      }\n`;
+    return output;
+  }
 }
 
 export default Client;
