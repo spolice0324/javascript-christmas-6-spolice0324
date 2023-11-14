@@ -50,7 +50,7 @@ class Client {
       output += `${discount}: ${cost.toLocaleString()}${INFO.UNIT}\n`;
     });
     if (this.getGift() !== INFO.NONE)
-      output += `${DISCOUNT.GIFTS}: -${MENU.샴페인.price.toLocaleString()}${
+      output += `${DISCOUNT.GIFTS}: -${INFO.GIFT_PRICE.toLocaleString()}${
         INFO.UNIT
       }\n`;
     return output;
@@ -61,7 +61,7 @@ class Client {
     if (!benefit || Object.keys(benefit).length === 0) return 0;
 
     let totalAmount = Object.values(benefit).reduce((acc, cur) => acc + cur);
-    if (this.getGift() !== INFO.NONE) totalAmount += -MENU.샴페인.price;
+    if (this.getGift() !== INFO.NONE) totalAmount += -INFO.GIFT_PRICE;
     return totalAmount;
   }
 
@@ -71,7 +71,7 @@ class Client {
     let gift = 0;
 
     if (this.getGift() !== INFO.NONE) {
-      gift = MENU.샴페인.price;
+      gift = INFO.GIFT_PRICE;
     }
 
     const total = beforeDiscount + discountAmount + gift;

@@ -35,6 +35,7 @@ const INFO = Object.freeze({
   WEEK_DISCOUNT: 2023,
   ORDER_MINIMUM: 10000,
   GIFT_CONDITION: 120000,
+  GIFT_PRICE: 25000,
   GIFT: '샴페인 1개',
   NONE: '없음',
   BADGE: {
@@ -61,8 +62,7 @@ const INPUT_MESSAGE = Object.freeze({
 const OUTPUT_MESSAGE = Object.freeze({
   INTRO: '안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.\n',
   TITLE: {
-    PREVIEW: date =>
-      `12월 ${date}일에 우테코 식당에서 받을 이벤트 혜택 미리보기!\n`,
+    PREVIEW: (date) => `12월 ${date}일에 우테코 식당에서 받을 이벤트 혜택 미리보기!\n`,
     ORDER_MENU: '<주문 메뉴>',
     BEFORE_DISCOUNT: '<할인 전 총주문 금액>',
     AFTER_DISCOUNT: '<할인 후 예상 결제 금액>',
