@@ -1,3 +1,4 @@
+import { INFO, MENU } from '../Util/constants';
 import Discount from './Discount';
 
 class Client {
@@ -33,6 +34,12 @@ class Client {
     });
     return cost;
   }
+
+  getGift() {
+    if (this.getBeforeDiscount() >= INFO.GIFT_CONDITION) return INFO.GIFT;
+    else return INFO.NONE;
+  }
+
 }
 
 export default Client;
