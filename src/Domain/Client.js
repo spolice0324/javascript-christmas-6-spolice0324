@@ -10,13 +10,13 @@ class Client {
     this.#order = order;
   }
 
-  getDate() {
-    return this.#date;
-  }
-
   calculateBenefits() {
     const discount = new Discount();
     return discount.calculateDiscount(this.#date, this.#order);
+  }
+
+  getDate() {
+    return this.#date;
   }
 
   getOrderList() {
@@ -80,11 +80,17 @@ class Client {
 
   getEventBadge() {
     const benefit = this.getDiscountAmount();
-    if (benefit <= -INFO.BADGE.SANTA.PRICE) return INFO.BADGE.SANTA.NAME;
-    else if (benefit <= -INFO.BADGE.TREE.PRICE) return INFO.BADGE.TREE.NAME;
-    else if (benefit <= -INFO.BADGE.STAR.PRICE) return INFO.BADGE.STAR.NAME;
-    else return INFO.NONE;
+
+    switch (true) {
+      case benefit <= -INFO.BADGE.SANTA.PRICE:
+        return INFO.BADGE.SANTA.NAME;
+      case benefit <= -INFO.BADGE.TREE.PRICE:
+        return INFO.BADGE.TREE.NAME;
+      case benefit <= -INFO.BADGE.STAR.PRICE:
+        return INFO.BADGE.STAR.NAME;
+      default:
+        return INFO.NONE;
+    }
   }
 }
-
 export default Client;
