@@ -55,6 +55,15 @@ class Client {
       }\n`;
     return output;
   }
+
+  getDiscountAmount() {
+    const benefit = this.calculateBenefits();
+    if (this.isEmpty(benefit)) return 0;
+
+    let totalAmount = Object.values(benefit).reduce((acc, cur) => acc + cur);
+    if (this.getGift() !== INFO.NONE) totalAmount += -MENU.샴페인.price;
+    return totalAmount;
+  }
 }
 
 export default Client;
