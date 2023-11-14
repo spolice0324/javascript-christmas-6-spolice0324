@@ -2,6 +2,7 @@ import { Console } from '@woowacourse/mission-utils';
 import { ERROR_MESSAGE, INPUT_MESSAGE, MENU } from '../src/Util/constants';
 import inputHandler from '../src/Util/inputHandler';
 import { validateDate, validateOrder } from '../src/Util/validateInput';
+import parseInput from '../src/Util/parseInput';
 
 describe('Util 테스트', () => {
   describe('validateDate 함수', () => {
@@ -26,7 +27,7 @@ describe('Util 테스트', () => {
   });
 
   describe('validateOrder 함수', () => {
-    test('유효한 주문은 예외를 발생시키지 않아야 합니다.', () => {
+    test('유효한 주문은 예외를 발생시키지 않아야 한다.', () => {
       const validOrder = [
         ['아이스크림', 2],
         ['제로콜라', 1],
@@ -34,14 +35,14 @@ describe('Util 테스트', () => {
       expect(() => validateOrder(validOrder)).not.toThrow();
     });
 
-    test('유효하지 않은 주문은 예외를 발생시켜야 합니다. - 없는 메뉴 ', () => {
+    test('유효하지 않은 주문은 예외를 발생시켜야 한다. - 없는 메뉴 ', () => {
       const invalidMenu = [['새우튀김', 1]];
       expect(() => validateOrder(invalidMenu)).toThrow(
         ERROR_MESSAGE.INVALID_ORDER,
       );
     });
 
-    test('유효하지 않은 주문은 예외를 발생시켜야 합니다. - 수량 0 ', () => {
+    test('유효하지 않은 주문은 예외를 발생시켜야 한다. - 수량 0 ', () => {
       const invalidCount = [['아이스크림', 0]];
       expect(() => validateOrder(invalidCount)).toThrow(
         ERROR_MESSAGE.INVALID_ORDER,
@@ -111,6 +112,17 @@ describe('Util 테스트', () => {
         아이스크림: 2,
         제로콜라: 1,
       });
+    });
+  });
+
+  describe('입력 받은 인풋을 파싱하는 함수 테스트', () => {
+    test('입력 받은 인풋을 주문 리스트 형태로 변환하여 반환해야한다.', () => {
+      const input = '아이스크림-2, 제로콜라-1';
+      const parsedInput = parseInput(input);
+      expect(parsedInput).toEqual([
+        ['아이스크림', 2],
+        ['제로콜라', 1],
+      ]);
     });
   });
 });
