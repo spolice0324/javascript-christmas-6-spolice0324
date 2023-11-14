@@ -1,5 +1,5 @@
 import Discount from '../src/Domain/Discount';
-import { DATE, DISCOUNT } from '../src/Util/constants';
+import { DATE, INFO } from '../src/Util/constants';
 
 describe('Discount 클래스 로직 테스트', () => {
   let discount;
@@ -29,20 +29,20 @@ describe('Discount 클래스 로직 테스트', () => {
       const menu = { 레드와인: 1, 해산물파스타: 1 };
       const result = discount.isWeekday(date, menu);
       const expectedDiscount = 0;
-      expect(expectedDiscount).toBe(0);
+      expect(result).toBe(expectedDiscount);
     });
     test('평일(일~목)이라면 주문 내역 중 디저트 메뉴를 할인하는 금액이 올바르게 계산되어야 한다. - 디저트 메뉴가 1개일 때', () => {
       const date = DATE.EVENT_START + 3;
       const menu = { 초코케이크: 1, 레드와인: 1, 해산물파스타: 1 };
       const result = discount.isWeekday(date, menu);
-      const expectedDiscount = -2023;
+      const expectedDiscount = -INFO.WEEK_DISCOUNT;
       expect(result).toBe(expectedDiscount);
     });
     test('평일(일~목)이라면 주문 내역 중 디저트 메뉴를 할인하는 금액이 올바르게 계산되어야 한다. - 디저트 메뉴가 여러개일 때', () => {
       const date = DATE.EVENT_START + 3;
       const menu = { 초코케이크: 4, 레드와인: 1, 해산물파스타: 1 };
       const result = discount.isWeekday(date, menu);
-      const expectedDiscount = -2023 * 4;
+      const expectedDiscount = -INFO.WEEK_DISCOUNT * 4;
       expect(result).toBe(expectedDiscount);
     });
   });
@@ -59,15 +59,32 @@ describe('Discount 클래스 로직 테스트', () => {
       const date = DATE.EVENT_START + 1;
       const menu = { 해산물파스타: 1, 초코케이크: 1, 레드와인: 1 };
       const result = discount.isWeekend(date, menu);
-      const expectedDiscount = -2023;
+      const expectedDiscount = -INFO.WEEK_DISCOUNT;
       expect(result).toBe(expectedDiscount);
     });
     test('주말(금~토)이라면 주문 내역 중 메인 메뉴를 할인하는 금액이 올바르게 계산되어야 한다. - 메인 메뉴가 여러개일 때', () => {
       const date = DATE.EVENT_START + 1;
       const menu = { 해산물파스타: 4, 초코케이크: 1, 레드와인: 1 };
       const result = discount.isWeekend(date, menu);
-      const expectedDiscount = -2023 * 4;
+      const expectedDiscount = -INFO.WEEK_DISCOUNT * 4;
       expect(result).toBe(expectedDiscount);
     });
   });
+
+  describe('특별 할인 메소드 테스트', () => {
+    test('특별 할인 날짜라면 할인 금액이 올바르게 계산되어야 한다.', () => {
+      const date = DATE.SPECIAL_DATE[0];
+      const result = discount.isSpecialDay(date);
+      const expectedDiscount = -DATE.SPECIAL_DISCOUNT;
+      expect(result).toBe(expectedDiscount);
+    });
+    test('특별 할인 날짜가 아니라면 할인 금액이 0원이 되어야 한다.', () => {
+      const date = DATE.SPECIAL_DATE[0] + 1;
+      const result = discount.isSpecialDay(date);
+      const expectedDiscount = 0;
+      expect(result).toBe(expectedDiscount);
+    });
+  });
+
+  
 });
