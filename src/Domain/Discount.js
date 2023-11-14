@@ -7,14 +7,14 @@ class Discount {
       if (value !== 0) discount[key] = value;
     };
 
-    addDisCount(DISCOUNT.CHRISTMAS, this.checkPeriod(date));
-    addDisCount(DISCOUNT.WEEK, this.checkWeek(date, menu));
-    addDisCount(DISCOUNT.WEEKEND, this.checkWeekend(date, menu));
-    addDisCount(DISCOUNT.SPECIAL, this.checkSpecialDay(date));
+    addDisCount(DISCOUNT.CHRISTMAS, this.isPeriod(date));
+    addDisCount(DISCOUNT.WEEK, this.isWeekday(date, menu));
+    addDisCount(DISCOUNT.WEEKEND, this.isWeekend(date, menu));
+    addDisCount(DISCOUNT.SPECIAL, this.isSpecialDay(date));
     return discount;
   }
 
-  checkPeriod(date) {
+  isPeriod(date) {
     let periodDiscount = 0;
     if (date >= DATE.EVENT_START && date <= DATE.EVENT_END) {
       periodDiscount +=
@@ -23,7 +23,7 @@ class Discount {
     return periodDiscount;
   }
 
-  checkWeek(date, menu) {
+  isWeekday(date, menu) {
     let weekDisCount = 0;
     if (!(date % 7 === 1 || date % 7 === 2)) {
       let count = 0;
@@ -35,7 +35,7 @@ class Discount {
     return weekDisCount;
   }
 
-  checkWeekend(date, menu) {
+  isWeekend(date, menu) {
     let weekendDisCount = 0;
     if (date % 7 === 1 || date % 7 === 2) {
       let count = 0;
@@ -47,7 +47,7 @@ class Discount {
     return weekendDisCount;
   }
 
-  checkSpecialDay(date) {
+  isSpecialDay(date) {
     let specialDayDiscount = 0;
     if (DATE.SPECIAL_DATE.includes(date))
       specialDayDiscount += -DATE.SPECIAL_DISCOUNT;
