@@ -1,5 +1,13 @@
+import PromotionController from './Domain/PromotionController';
+
 class App {
-  async run() {}
+  constructor() {
+    this.promotionController = new PromotionController();
+  }
+
+  async run() {
+    await this.promotionController.insertInput();
+  }
 }
 
 export default App;
